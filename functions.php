@@ -10,8 +10,8 @@ function wp_theme_main_style(){
 
   wp_enqueue_style('animate-css',get_template_directory_uri().'/assets/animate/animate.min.css',false);
 
-  wp_enqueue_style('style-css',get_template_directory_uri().'/css/style.css',false);
-  wp_enqueue_style('style5-css',get_template_directory_uri().'/css/style5.css',false);
+  wp_enqueue_style('style-css',get_template_directory_uri().'/assets/css/style.css',false);
+  wp_enqueue_style('style5-css',get_template_directory_uri().'/assets/css/style5.css',false);
 
   //wp_enqueue_style('responsive-css',get_template_directory_uri().'/css/responsive.css',false);
   //wp_enqueue_style('fonts-googles','https://use.fontawesome.com/releases/v5.3.1/css/all.css',false);
@@ -65,8 +65,18 @@ function register_my_menu() {
 add_theme_support('post-thumbnails');
 
 //Some simple code for our widget-enabled sidebar
-if ( function_exists('register_sidebar') )
-    register_sidebar();
+if ( function_exists('register_sidebar') ){
+  $sidebar1 = array(
+    'before_widget' => '<div class="widget %2$s">',
+    'after_widget' => '</div>',
+    'before_title' => '<h2 class="widgettitle">',
+    'after_title' => '</h2>',        
+    'name' => __( 'Sidebar principal', 'textdomain' ),  
+    'id'            => "sidebar-principal",
+  );  
+  register_sidebar($sidebar1);
+}
+    
 
 
 //Enable post and comments RSS feed links to head
