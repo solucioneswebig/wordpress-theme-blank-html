@@ -4,17 +4,7 @@ function wp_theme_main_style(){
   wp_enqueue_style('bootstrap-css',get_template_directory_uri().'/assets/bootstrap/css/bootstrap.min.css',false);
   wp_enqueue_style('fontawesome',get_template_directory_uri().'/assets/fontawesome/css/all.min.css',false);
 
-  wp_enqueue_style('owlcarousel-css',get_template_directory_uri().'/assets/owlcarousel/assets/owl.carousel.min.css',false);
-
-  wp_enqueue_style('litbox-css',get_template_directory_uri().'/assets/lightbox/css/lightbox.min.css',false);
-
-  wp_enqueue_style('animate-css',get_template_directory_uri().'/assets/animate/animate.min.css',false);
-
   wp_enqueue_style('style-css',get_template_directory_uri().'/assets/css/style.css',false);
-  wp_enqueue_style('style5-css',get_template_directory_uri().'/assets/css/style5.css',false);
-
-  //wp_enqueue_style('responsive-css',get_template_directory_uri().'/css/responsive.css',false);
-  //wp_enqueue_style('fonts-googles','https://use.fontawesome.com/releases/v5.3.1/css/all.css',false);
 
 }
 
@@ -27,19 +17,8 @@ add_action('wp_enqueue_scripts','wp_theme_main_style');
 // Load WP jQuery
 function insert_jquery(){
   wp_enqueue_script('jquery');
-  
-  wp_enqueue_script( 'bootstrap-min-js',get_template_directory_uri().'/assets/bootstrap/js/bootstrap.min.js' , array('jquery'), '4.3.1', true );
-
-
-  wp_enqueue_script( 'wow-js',get_template_directory_uri().'/assets/wow/wow.min.js' , array('jquery'), '4.3.1', true );
-
-
-  wp_enqueue_script( 'owlcarousel-js',get_template_directory_uri().'/assets/owlcarousel/owl.carousel.min.js' , array('jquery'), '4.3.1', true );
 
   wp_enqueue_script( 'lightbox-js',get_template_directory_uri().'/assets/lightbox/js/lightbox.min.js' , array('jquery'), '4.3.1', true );
-
-  
-  wp_enqueue_script( 'typed-min-js', get_template_directory_uri().'/assets/js/typed.min.js', array('jquery'), '1.0.0', true );
 
   wp_enqueue_script( 'script-js', get_template_directory_uri().'/js/script.js', array('jquery'), '1.0.0', true );
 
@@ -76,11 +55,16 @@ if ( function_exists('register_sidebar') ){
   );  
   register_sidebar($sidebar1);
 }
-    
+
 
 
 //Enable post and comments RSS feed links to head
 add_theme_support( 'automatic-feed-links' );
+
+//support for title tag
+add_theme_support( 'title-tag' );
+
+
 
 /*Función paginación página testimonios*/
 function custom_pagination($numpages = '', $pagerange = '', $paged='') {
@@ -161,3 +145,78 @@ function woocommerce_support() {
    add_theme_support( 'woocommerce' );
 }
 */
+
+
+
+
+/**
+* Custom walker class.
+*/
+class IBenic_Walker extends Walker_Nav_Menu {
+    
+	// Displays start of an element. E.g '<li> Item Name'
+    // @see Walker::start_el()
+    function start_el(&$output, $item, $depth=0, $args=array(), $id = 0) {
+    	$object = $item->object;
+    	$type = $item->type;
+    	$title = $item->title;
+    	$description = $item->description;
+    	$permalink = $item->url;
+
+      $output .= "<li class='" .  implode(" ", $item->classes) . "'>";
+        
+      //Add SPAN if no Permalink
+      if( $permalink && $permalink != '#' ) {
+      	$output .= '<a href="' . $permalink . '">';
+      } else {
+      	$output .= '<span>';
+      }
+       
+      $output .= $title;
+
+      if( $description != '' && $depth == 0 ) {
+      	$output .= '<small class="description">' . $description . '</small>';
+      }
+
+      if( $permalink && $permalink != '#' ) {
+      	$output .= '</a>';
+      } else {
+      	$output .= '</span>';
+      }
+    }
+}
+
+add_action( 'wp_head', 'ibenic_walker_style');
+
+function ibenic_walker_style(){
+	?>
+	<style>
+		.menu-item a small {
+			font-weight:300;
+			color:#999;
+			display: block;
+		}
+
+		.main-navigation span {
+			 outline-offset: -1px;
+    		padding: 0.84375em 0;
+			 display: block;
+    		line-height: 1.3125;
+		}
+
+		@media screen and (min-width: 56.875em){
+			.main-navigation span {
+			    outline-offset: -8px;
+			    padding: 0.65625em 0.875em;
+			    white-space: nowrap;
+			}
+
+			.main-navigation .menu-item-has-children > span {
+			  margin: 0;
+    		padding-right: 2.25em;
+			}
+		}
+		
+	</style>
+	<?php
+}
