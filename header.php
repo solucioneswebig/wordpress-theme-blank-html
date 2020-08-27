@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
     <head>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta charset="<?php bloginfo( 'charset' ); ?>" />
         <link rel="profile" href="http://gmpg.org/xfn/11" />
         <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
@@ -11,7 +12,7 @@
 Header
 ============================-->
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+<nav id="mainnav" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
 <div class="container">
   <a class="navbar-brand js-scroll-trigger" href="#page-top">
     <?php 
@@ -30,9 +31,8 @@ Header
       }
     ?>
   </a>
-  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-    Menu
-    <i class="fas fa-bars"></i>
+  <button id="btn_menu" class="navbar-toggler collapse" type="button">  
+      <span class="menu_icons"></span>
   </button>
 
  
@@ -45,7 +45,7 @@ Header
         'container_class'   => "collapse navbar-collapse", 
         'container_id'     => "navbarResponsive",
         'items_wrap'  => '<ul class="navbar-nav text-uppercase ml-auto"><li class="nav-item" id="item-id"><?php __( "Menu:", "textdomain" ); ?></li>%3$s</ul>',
-        'walker' => new IBenic_Walker
+        //'walker' => new IBenic_Walker
       ));
 
       ?>

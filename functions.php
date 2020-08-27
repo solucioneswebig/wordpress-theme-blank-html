@@ -20,7 +20,7 @@ function insert_jquery(){
 
   wp_enqueue_script( 'lightbox-js',get_template_directory_uri().'/assets/lightbox/js/lightbox.min.js' , array('jquery'), '4.3.1', true );
 
-  wp_enqueue_script( 'script-js', get_template_directory_uri().'/js/script.js', array('jquery'), '1.0.0', true );
+  wp_enqueue_script( 'script-js', get_template_directory_uri().'/assets/js/script.js', array('jquery'), '1.0.0', true );
 
   //wp_enqueue_script( 'owl-carousel-js', get_template_directory_uri().'/js/owl.carousel.js', array('jquery'), '1.0.0', true );
 

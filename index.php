@@ -23,10 +23,6 @@ get_header();
       </div>
       </div>
       </div>
-      <div class="row justify-content-center">
-        <div class="col-md-12 text-center">
-            <a href="#"><img class="img-fluid" src="<?php echo get_template_directory_uri(); ?>/img/portfolio/raven-downBTN.png"></a>
-        </div>
       </div>
     </div>
     </div>
