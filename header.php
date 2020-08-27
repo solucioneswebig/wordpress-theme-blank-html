@@ -13,7 +13,23 @@ Header
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
 <div class="container">
-  <a class="navbar-brand js-scroll-trigger" href="#page-top">Logo<!--<img class="img-fluid" src="<?php echo get_template_directory_uri(); ?>/assets/img/logo.png" alt="" width="120px">--></a>
+  <a class="navbar-brand js-scroll-trigger" href="#page-top">
+    <?php 
+      if ( function_exists( 'the_custom_logo' ) ) {
+        the_custom_logo();
+       }
+
+      $custom_logo_id = get_theme_mod( 'custom-logo' );
+      $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
+
+      
+      if ( has_custom_logo() ) {
+        echo '<img src="' . esc_url( $logo ) . '">';
+      } else {
+              echo '<h1>'. get_bloginfo( 'name' ) .'</h1>';
+      }
+    ?>
+  </a>
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
     Menu
     <i class="fas fa-bars"></i>
